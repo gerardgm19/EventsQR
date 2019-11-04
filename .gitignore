@@ -58,4 +58,14 @@ typings/
 .env
 
 # next.js build output
-.next
+.next/*
+.expo/*
+npm-debug.*
+*.jks
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+web-report/
+
