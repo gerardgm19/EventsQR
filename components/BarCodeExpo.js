@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Button, Alert, } from 'react-native';
+import { Text, View, StyleSheet, Button, Alert, TouchableOpacity} from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
 import { BarCodeScanner } from 'expo-barcode-scanner';
@@ -181,7 +181,7 @@ export default class BarcodeScannerExample extends React.Component {
         />
         <Modal
           visible={this.state.alertSuccessVisible}
-          onTouchOutside={ () => {this.setState({scanned: false , alertSuccessVisible: false})} }
+          onTouchOutside={ () => {this.setState({alertSuccessVisible: false})} }
           modalAnimation={new SlideAnimation({
             slideFrom: 'bottom',
           })}
@@ -189,7 +189,7 @@ export default class BarcodeScannerExample extends React.Component {
             <ModalFooter>
               <ModalButton
                 text="OK"
-                onPress={() => {this.setState({ scanned: false , alertSuccessVisible: false})} }
+                onPress={() => {this.setState({alertSuccessVisible: false})} }
               />
             </ModalFooter>
           }
@@ -230,7 +230,7 @@ export default class BarcodeScannerExample extends React.Component {
         
         <Modal
           visible={this.state.alertErrorVisible}
-          onTouchOutside={ () => {this.setState({scanned: false , alertErrorVisible: false})} }
+          onTouchOutside={ () => {this.setState({alertErrorVisible: false})} }
           modalAnimation={new SlideAnimation({
             slideFrom: 'bottom',
           })}
@@ -238,7 +238,7 @@ export default class BarcodeScannerExample extends React.Component {
             <ModalFooter>
               <ModalButton
                 text="OK"
-                onPress={() => {this.setState({ scanned: false , alertErrorVisible: false})} }
+                onPress={() => {this.setState({alertErrorVisible: false})} }
               />
             </ModalFooter>
           }
@@ -260,6 +260,11 @@ export default class BarcodeScannerExample extends React.Component {
             </View>
           </ModalContent>
         </Modal>
+        {this.state.scanned && !this.state.alertErrorVisible && !this.state.alertSuccessVisible &&
+          <TouchableOpacity onPress={() => this.setState({ scanned: false })} style={styles.scanAgainButton}>
+            <Text style={styles.textButton}>Tap to scan again</Text>
+          </TouchableOpacity>
+        }
       </View>
     );
   }
@@ -307,4 +312,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: 'maven-pro-bold',
   },
+  scanAgainButton:{
+    height: 50,
+    backgroundColor: '#28aece',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textButton:{
+    color: 'white',
+    textTransform: 'uppercase',
+    fontSize: 20,
+    fontWeight: 'bold',
+  }
 });
